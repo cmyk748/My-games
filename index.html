@@ -1,1 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerWorld — Портал Игр</title>
+    <style>
+        /* Стиль в стиле "Темная тема" для геймеров */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #0b0e14;
+            color: white;
+        }
 
+        header {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .search-box {
+            margin-top: 20px;
+            padding: 10px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Карточка игры как на больших сайтах */
+        .game-card {
+            background: #1c222d;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: #2575fc;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .game-img {
+            width: 100%;
+            height: 160px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 40px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-info h3 { margin: 0 0 10px 0; color: #fff; }
+        .game-info p { font-size: 14px; color: #aaa; height: 40px; overflow: hidden; }
+
+        .btn-play {
+            display: block;
+            background: #2575fc;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn-play:hover { background: #1a5aba; }
+
+        .tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #2575fc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎮 GamerWorld</h1>
+    <p>Все популярные игры в одном месте</p>
+    <input type="text" class="search-box" id="search" placeholder="Найти игру..." onkeyup="filterGames()">
+</header>
+
+<div class="container" id="gameGrid">
+    </div>
+
+<script>
+    // Наша база популярных игр
+    const games = [
+        { 
+            name: "Roblox", 
+            desc: "Создавай свои миры и играй с друзьями.", 
+            url: "https://www.roblox.com/", 
+            img: "R", 
+            color: "#ef4444",
+            tag: "Популярное"
+        },
+        { 
+            name: "Minecraft (Web)", 
+            desc: "Классический Майнкрафт прямо в браузере.", 
+            url: "https://classic.minecraft.net/", 
+            img: "M", 
+            color: "#22c55e",
+            tag: "Выживание"
+        },
+        { 
+            name: "Among Us Online", 
+            desc: "Найди предателя среди экипажа.", 
+            url: "https://amongusplay.online/", 
+            img: "A", 
+            color: "#3b82f6",
+            tag: "Экшен"
+        },
+        { 
+            name: "Brawl Stars Guide", 
+            desc: "Полезные советы и тактики для боя.", 
+            url: "https://supercell.com/en/games/brawlstars/", 
+            img: "B", 
+            color: "#f59e0b",
+            tag: "Советы"
+        }
+    ];
+
+    function renderGames(data) {
+        const grid = document.getElementById('gameGrid');
+        grid.innerHTML = '';
+        data.forEach(game => {
+            grid.innerHTML += `
+                <div class="game-card">
+                    <div class="tag">${game.tag}</div>
+                    <div class="game-img" style="background-color: ${game.color}">${game.img}</div>
+                    <div class="game-info">
+                        <h3>${game.name}</h3>
+                        <p>${game.desc}</p>
+                        <a href="${game.url}" target="_blank" class="btn-play">ИГРАТЬ</a>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function filterGames() {
+        const text = document.getElementById('search').value.toLowerCase();
+        const filtered = games.filter(g => g.name.toLowerCase().includes(text));
+        renderGames(filtered);
+    }
+
+    // Запуск при старте
+    renderGames(games);
+</script>
+
+</body>
+</html>
